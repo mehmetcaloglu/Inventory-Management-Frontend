@@ -8,7 +8,7 @@ type FormErrors = {
   firstName?: string;
   lastName?: string;
   address?: string;
-  shortDescription?: string;
+  description?: string;
   price?: string;
   quantity?: string;
   category?: string;
@@ -22,4 +22,4 @@ type FormErrors = {
   threshold?: string;
 };
 
-export default FormErrors
+export default FormErrors;

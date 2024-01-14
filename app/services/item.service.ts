@@ -1,37 +1,45 @@
-import IItem from "../types/item.type";
+import IProduct from "../types/product.item";
 import api from "./api";
 
-const getAllItems = () => {
-  return api.get("/items");
+const getAllProducts = () =>
+{
+  return api.get( "/product-list/" );
 };
 
-const getFilteredItems = (params: {}) => {
-  return api.get("/items/search", { params });
+
+const getProductDetail = ( id: number ) =>
+{
+  return api.get( `/product-detail/${ id }` );
 };
 
-const getItemById = (id: number) => {
-  return api.get(`/items/${id}`);
+const createProduct = ( data: IProduct ) =>
+{
+  return api.post( "/product-create", JSON.stringify( data ) );
 };
 
-const createItem = (data: IItem) => {
-  return api.post("/items", JSON.stringify(data));
+const updateProduct = ( id: number, data: IProduct ) =>
+{
+  return api.put( `/product-update/${ id }`, JSON.stringify( data ) );
 };
 
-const updateItem = (id: number, data: IItem) => {
-  return api.put(`/items/${id}`, JSON.stringify(data));
+const deleteProduct = ( id: number ) =>
+{
+  return api.delete( `/product-delete/${ id }` );
 };
 
-const deleteItem = (id: number) => {
-  return api.delete(`/items/${id}`);
+// const getFilteredProducts = ( params: {} ) =>
+// {
+//   return api.get( "/Products/search", { params } );
+// };
+
+
+const ProductService = {
+  getAllProducts,
+  getProductDetail,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  // getFilteredProducts,
 };
 
-const ItemService = {
-  getAllItems,
-  getItemById,
-  createItem,
-  updateItem,
-  deleteItem,
-  getFilteredItems,
-};
-
-export default ItemService;
+export default ProductService;

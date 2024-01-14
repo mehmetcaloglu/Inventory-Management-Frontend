@@ -1,10 +1,11 @@
-import IItem from "./item.type";
+import IProduct from "./product.item";
 import IStore from "./store.type";
 
-export default interface IInventory {
+export default interface IInventory
+{
   id?: number;
   store?: IStore;
-  item?: IItem;
+  item?: IProduct;
   threshold: number;
   quantity: number;
 }

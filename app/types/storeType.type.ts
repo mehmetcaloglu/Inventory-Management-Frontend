@@ -1,9 +1,8 @@
-enum IStoreType {
-  RETAIL = 'RETAIL',
+enum IStoreType
+{
+  CENTER = 'CENTER',
   WAREHOUSE = 'WAREHOUSE',
-  WHOLESALE = 'WHOLESALE',
-  CLUB = 'CLUB',
-  SUPERMARKET = 'SUPERMARKET'
+  STORE = 'STORE'
 }
 
-export default IStoreType
+export default IStoreType;

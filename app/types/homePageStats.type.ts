@@ -1,6 +1,7 @@
-import IItem from "./item.type";
+import IProduct from "./product.item";
 
-interface IHomePageStats {
+interface IHomePageStats
+{
   totalStores: number;
   totalInventories: number;
   totalPurchaseOrders: number;
@@ -8,8 +9,8 @@ interface IHomePageStats {
   pendingPurchaseOrders: number;
   deliveredPurchaseOrders: number;
   inventoriesAtThreshold: number;
-  mostPopularItemInPurchaseOrders: IItem;
-  mostPopularItemInInventory: IItem;
+  mostPopularItemInPurchaseOrders: IProduct;
+  mostPopularItemInInventory: IProduct;
 }
 
-export default IHomePageStats
+export default IHomePageStats;

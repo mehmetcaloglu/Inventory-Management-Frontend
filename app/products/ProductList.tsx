@@ -1,10 +1,11 @@
-import React from 'react'
-import IItem from '../types/item.type'
-import Item from './Item'
+import React from 'react';
+import IProduct from '../types/product.item';
+import Item from './Product';
 
 // TODO include type
 
-const ItemList = ({ items, loading, deleteItem, editItem }: any) => {
+const ItemList = ( { items, loading, deleteItem, editItem }: any ) =>
+{
   return (
     <>
       <div className="my-8 overflow-x-auto">
@@ -33,23 +34,23 @@ const ItemList = ({ items, loading, deleteItem, editItem }: any) => {
                 <th className="text-left font-medium text-gray-500 uppercase tracking-wide py-3 px-2"></th>
               </tr>
             </thead>
-            {!loading && (
+            { !loading && (
               <tbody className="bg-white">
-                {items?.map((item: IItem) => (
+                { items?.map( ( item: IProduct ) => (
                   <Item
-                    item={item}
-                    key={item.id}
-                    deleteItem={deleteItem}
-                    editItem={editItem}
+                    item={ item }
+                    key={ item.id }
+                    deleteItem={ deleteItem }
+                    editItem={ editItem }
                   />
-                ))}
+                ) ) }
               </tbody>
-            )}
+            ) }
           </table>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ItemList
+export default ItemList;

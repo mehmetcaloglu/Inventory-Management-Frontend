@@ -1,14 +1,12 @@
 import IUserRole from "./userRole.type";
 import IStore from "./store.type";
 
-export default interface IUser {
+export default interface IUser
+{
   id?: number;
-  email: string;
-  firstName: string;
   username: string;
-  lastName: string;
-  admin?: boolean;
+  admin?: boolean; //YES İF ROLE_CENTRAL_OFFICE_EMPLOYEE
   password?: string;
-  roles?: IUserRole[];
-  stores?: IStore[];
+  roles?: IUserRole;
+  stores?: IStore;
 }

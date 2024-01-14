@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -7,70 +7,82 @@ import AuthService from '../services/auth.service';
 import { useUserContext } from '../context/user';
 import TokenService from '../services/token.service';
 import FormErrors from '../types/formErrors.type';
+import IUser from '../types/user.type';
 
-export default function Login() {
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isFormValid, setIsFormValid] = useState(false);
+export default function Login ()
+{
+  const [ password, setPassword ] = useState( '' );
+  const [ username, setUsername ] = useState( '' );
+  const [ errors, setErrors ] = useState<FormErrors>( {} );
+  const [ isFormValid, setIsFormValid ] = useState( false );
   const router = useRouter();
   const userContext = useUserContext() || { setUser: () => { } };
   const { setUser } = userContext;
 
-  const clearInput = () => {
-    setUsername('');
-    setPassword('');
-    setErrors({})
-  }
-
-  useEffect(() => {
-    const validateForm = () => {
-      const newErrors: FormErrors = {}
-
-      if (!username) {
-        newErrors.username = 'Username is required'
-      } else if (username.length < 4) {
-        newErrors.username = 'Username must be at least 4 characters'
-      }
-
-      if (!password) {
-        newErrors.password = 'Password is required'
-      } else if (password.length < 6) {
-        newErrors.password = 'Password must be at least 6 characters'
-      }
-      setErrors(newErrors)
-      setIsFormValid(Object.keys(newErrors).length === 0);
-    }
-
-    validateForm()
-  }, [username, password])
-
-  const handleSubmit = async () => {
-    if (isFormValid) {
-      try {
-        const response = await AuthService.login({ password, username })
-
-        TokenService.set(response.data);
-        setUser(response.data.user)
-        clearInput()
-        router.push('/');
-      } catch (error: any) {
-        const errMsg = error.response?.data?.message ? error.response.data.message : 'Unable to Login';
-        setErrors({ ...errors, server: errMsg });
-      }
-    }
+  const clearInput = () =>
+  {
+    setUsername( "" );
+    setPassword( "" );
+    setErrors( {} );
   };
+
+  useEffect( () =>
+  {
+    // const validateForm = () =>
+    // {
+    //   const newErrors: FormErrors = {};
+
+    //   if ( !username ) {
+    //     newErrors.username = 'Username is required';
+    //   } else if ( username.length < 4 ) {
+    //     newErrors.username = 'Username must be at least 4 characters';
+    //   }
+
+    //   if ( !password ) {
+    //     newErrors.password = 'Password is required';
+    //   } else if ( password.length < 6 ) {
+    //     newErrors.password = 'Password must be at least 6 characters';
+    //   }
+    //   setErrors( newErrors );
+    //   setIsFormValid( Object.keys( newErrors ).length === 0 );
+    // };
+
+    // validateForm();
+  }, [ username, password ] );
+
+  const handleLogin = async ( e: any ) =>
+  {
+    e.preventDefault();
+
+    try {
+      console.log( 'login' );
+      console.log( { password, username } );
+      const response = await AuthService.login( { username, password } );
+      console.log( response );
+      TokenService.set( { token: response.data.access, user: { roles: response.data.role, stores: response.data.depotname } as IUser } );
+      setUser( { roles: response.data.role, stores: response.data.depotname } as IUser );
+      clearInput();
+      router.push( '/' );
+    } catch ( error: any ) {
+      console.log( error );
+      const errMsg = error.response?.data?.message ? error.response.data.message : 'Unable to Login';
+      setErrors( { ...errors, server: errMsg } );
+    }
+
+  };
+
+  // console.log( localStorage.getItem( 'token' ) );
 
   return (
     <>
-      {errors.server && <div className="alert alert-danger">{errors.server}</div>}
+      { errors.server && <div className="alert alert-danger">{ errors.server }</div> }
       <section className="bg-white dark:bg-gray-900">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
             <Image
               alt="Pattern"
-              width={870}
-              height={870}
+              width={ 870 }
+              height={ 870 }
               src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
               className="absolute inset-0 h-full w-full object-cover"
             />
@@ -115,12 +127,12 @@ export default function Login() {
                   <input
                     type="text"
                     id="username"
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
+                    value={ username }
+                    onChange={ ( event ) => setUsername( "" + event.target.value + "" ) }
                     name="username"
                     className="pl-2 mt-1 w-full rounded-md border-gray-200 bg-white text-md text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   />
-                  {errors.username && <div className="alert-danger text-error text-sm">{errors.username}</div>}
+                  { errors.username && <div className="alert-danger text-error text-sm">{ errors.username }</div> }
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -135,29 +147,18 @@ export default function Login() {
                     type="password"
                     id="password"
                     name="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    value={ password }
+                    onChange={ ( event ) => setPassword( "" + event.target.value + "" ) }
                     className="pl-2 mt-1 w-full rounded-md border-gray-200 bg-white text-md text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   />
-                  {errors.password && <div className="alert-danger text-error text-sm">{errors.password}</div>}
+                  { errors.password && <div className="alert-danger text-error text-sm">{ errors.password }</div> }
 
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button onClick={handleSubmit} className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-md font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white">
+                  <div onClick={ handleLogin } className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-md font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white">
                     Log In
-                  </button>
-
-                  <p className="mt-4 text-md text-gray-500 dark:text-gray-400 sm:mt-0">
-                    <span>Dont have an account? </span>
-                    <Link
-                      href="/signup"
-                      className="text-gray-700 underline dark:text-gray-200"
-                    >
-                      Sign Up
-                    </Link>
-                    .
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

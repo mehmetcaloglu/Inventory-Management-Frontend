@@ -67,7 +67,7 @@ export default function Home ()
 
   const data = getFromLocalStorage( 'user' );
   console.log( "sfdsafasdf", data );
-  
+
   return data.roles == "staff_manager" ? (
     <main className="bg-gray-50 min-h-screen p-8">
       <div className="max-w-7xl mx-auto">

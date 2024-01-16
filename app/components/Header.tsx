@@ -27,7 +27,6 @@ const Header = () =>
   const nav = () =>
   {
     return (
-
       <>
         { user &&
           <>
@@ -59,15 +58,15 @@ const Header = () =>
             <li>
               <Link
                 className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/stores' ? 'active' : '' }` }
-                href="/stores"
+                href="/stocks"
               >
-                Stores
+                Stocks
               </Link>
             </li>
             <li>
               <Link
                 className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/purchase-orders' ? 'active' : '' }` }
-                href="/purchase-orders"
+                href="/orders"
               >
                 Purchase Orders
               </Link>
@@ -80,7 +79,6 @@ const Header = () =>
                 Users
               </Link>
             </li> }
-
           </> }
       </>
     );

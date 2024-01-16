@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import IPurchaseOrder from '../types/purchaseOrder.type'
-import PurchaseOrder from './PurchaseOrder'
+import React, { useState, useEffect } from 'react';
+import IPurchaseOrder from '../types/purchaseOrder.type';
+import PurchaseOrder from './PurchaseOrder';
 
-const PurchaseOrderList = ({
+const PurchaseOrderList = ( {
   purchaseOrders = [],
   updatePurchaseOrders
 }: any
-) => {
-  const [orders, setOrders] = useState(purchaseOrders);
+) =>
+{
+  const mockOrders = [
+    {
+      id: 1,
 
-  useEffect(() => {
-    setOrders(purchaseOrders)
-  }, [purchaseOrders])
+    }
+  ];
+  const [ orders, setOrders ] = useState( mockOrders );
+
+  useEffect( () =>
+  {
+    setOrders( purchaseOrders );
+  }, [ purchaseOrders ] );
 
   return (
     <div className="my-8 overflow-x-auto">
@@ -41,18 +49,16 @@ const PurchaseOrderList = ({
             </tr>
           </thead>
           <tbody className="bg-white">
-            {orders?.map((purchaseOrder: IPurchaseOrder) => (
+            { [ 0, 1 ]?.map( ( e ) => (
               <PurchaseOrder
-                purchaseOrder={purchaseOrder}
-                key={purchaseOrder.id}
-                updatePurchaseOrders={updatePurchaseOrders}
+                key={ e }
               />
-            ))}
+            ) ) }
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PurchaseOrderList
+export default PurchaseOrderList;

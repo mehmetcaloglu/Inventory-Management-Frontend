@@ -2,7 +2,7 @@ import ICategory from "../types/category.type";
 import api from "./api";
 
 const getAllCategories = () => {
-  return api.get("/categories");
+  return api.get("/categories/");
 };
 
 const getCategoryById = (id: number) => {

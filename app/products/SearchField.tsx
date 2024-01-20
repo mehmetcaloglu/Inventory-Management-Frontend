@@ -1,33 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import Select from 'react-tailwindcss-select';
-import ICategory from '../types/category.type';
+import React, { useState, useEffect } from "react";
+import Select from "react-tailwindcss-select";
+import ICategory from "../types/category.type";
 
 const initialState = {
-  name: '',
-  description: '',
-  minQuantity: '',
-  maxQuantity: '',
-  categoryName: '',
-  minPrice: '',
-  maxPrice: ''
-}
+  name: "",
+  description: "",
+  categoryName: "",
+  minPrice: "",
+  maxPrice: "",
+};
 
 const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
   const [searchState, setSearchState] = useState(filterParams);
 
   useEffect(() => {
-    setSearchState(filterParams)
-  }, [filterParams])
+    setSearchState(filterParams);
+  }, [filterParams]);
 
   const handleChange = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     const { name, value } = e.target;
     setSearchState({ ...searchState, [name]: value });
   };
 
   const handleSelectChange = (data: any) => {
     setSearchState({ ...searchState, categoryName: data.value });
-  }
+  };
 
   const handleSubmit = () => {
     setFilterParams(searchState);
@@ -35,14 +33,15 @@ const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
 
   const clearFilter = () => {
     setFilterParams({});
-    setSearchState(initialState);
-  }
+    setSearchState({ initialState });
+  };
 
   return (
-    <div className='mt-4 flex gap-1 justify-between'>
+    <div className="mt-4 flex gap-1 justify-between">
       <div>
         <div>
-          <label htmlFor="name"
+          <label
+            htmlFor="name"
             className="block text-sm font-medium text-gray-500"
           >
             Item Name
@@ -58,7 +57,8 @@ const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
           />
         </div>
         <div>
-          <label htmlFor="description"
+          <label
+            htmlFor="description"
             className="block text-sm font-medium text-gray-500"
           >
             Item Description
@@ -74,42 +74,11 @@ const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
           />
         </div>
       </div>
+
       <div>
         <div>
-          <label htmlFor="minQuantity"
-            className="block text-sm font-medium text-gray-500"
-          >
-            Min Quantity
-          </label>
-          <input
-            type="number"
-            placeholder="Search by Min Quantity..."
-            className="input input-bordered input-info w-full max-w-xs"
-            name="minQuantity"
-            id="minQuantity"
-            onChange={handleChange}
-            value={searchState?.minQuantity}
-          />
-        </div>
-        <div>
-          <label htmlFor="maxQuantity"
-            className="block text-sm font-medium text-gray-500"
-          >
-            Max Quantity
-          </label>
-          <input
-            type="number"
-            placeholder="Search by Max Quantity..."
-            className="input input-bordered input-info w-full max-w-xs"
-            name="maxQuantity"
-            onChange={handleChange}
-            value={searchState?.maxQuantity}
-          />
-        </div>
-      </div>
-      <div>
-        <div>
-          <label htmlFor="minPrice"
+          <label
+            htmlFor="minPrice"
             className="block text-sm font-medium text-gray-500"
           >
             Min Price
@@ -124,7 +93,8 @@ const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
           />
         </div>
         <div>
-          <label htmlFor="maxPrice"
+          <label
+            htmlFor="maxPrice"
             className="block text-sm font-medium text-gray-500"
           >
             Max Price
@@ -139,28 +109,43 @@ const SearchField = ({ filterParams, setFilterParams, categories }: any) => {
           />
         </div>
       </div>
-      <div className='flex flex-col gap-2'>
-        <div className='flex gap-2 justify-end mt-5'>
-          <button onClick={handleSubmit} className="btn btn-md btn-primary">Search</button>
-          <button onClick={clearFilter} className="btn btn-md">Reset</button>
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2 justify-end mt-5">
+          <button onClick={handleSubmit} className="btn btn-md btn-primary">
+            Search
+          </button>
+          <button onClick={clearFilter} className="btn btn-md">
+            Reset
+          </button>
         </div>
         <div>
-          <label htmlFor="categoryName"
+          <label
+            htmlFor="categoryName"
             className="block text-sm font-medium text-gray-500"
           >
             Category Name
           </label>
           <Select
             primaryColor={"indigo"}
-            placeholder='Select a Category Name...'
-            value={searchState?.categoryName ? { value: searchState.categoryName, label: searchState.categoryName } : null}
+            placeholder="Select a Category Name..."
+            value={
+              searchState?.categoryName
+                ? {
+                    value: searchState.categoryName,
+                    label: searchState.categoryName,
+                  }
+                : null
+            }
             onChange={handleSelectChange}
-            options={categories.map((category: ICategory) => ({ value: category.name, label: category.name }))}
+            options={categories.map((category: ICategory) => ({
+              value: category.name,
+              label: category.name,
+            }))}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SearchField;

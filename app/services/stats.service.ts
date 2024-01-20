@@ -1,16 +1,22 @@
 import api from "./api";
 
-const getHomePageStats = () => {
-  return api.get("/stats/home");
+const getAdminHomePageStats = () => {
+  const products = api.get("/product-list/");
+  return products;
 };
 
-const getStorePageStats = (id: number) => {
-  return api.get(`/stats/stores/${id}`);
+const getAraDepoStats = () => {
+  return api.get("/stats/ara-depo");
+};
+
+const getStorePageStats = (storeName: number) => {
+  return api.get(`/stats/stores/${storeName}`);
 };
 
 const StatsService = {
-  getHomePageStats,
+  getAdminHomePageStats,
   getStorePageStats,
+  getAraDepoStats,
 };
 
 export default StatsService;

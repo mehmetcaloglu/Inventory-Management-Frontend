@@ -1,55 +1,65 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useUserContext } from '../context/user';
-import AuthService from '../services/auth.service';
+import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { useUserContext } from "../context/user";
+import AuthService from "../services/auth.service";
 
-const Header = () =>
-{
+const Header = () => {
   const pathname = usePathname();
-  const userContext = useUserContext() || { user: undefined, setUser: () => { } };
+  const userContext = useUserContext() || {
+    user: undefined,
+    setUser: () => {},
+  };
   const { user, setUser } = userContext;
   const router = useRouter();
 
-  const handleLogout = async () =>
-  {
+  const handleLogout = async () => {
     try {
       await AuthService.logout();
-      setUser( undefined );
-      router.push( '/' );
-    } catch ( error ) {
-      console.error( error );
+      setUser(undefined);
+      router.push("/");
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const nav = () =>
-  {
+  const nav = () => {
     return (
       <>
-        { user &&
+        {user && (
           <>
-            { AuthService.isAdmin() && <li>
-              <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/suppliers' ? 'active' : '' }` }
-                href="/suppliers"
-              >
-                Suppliers
-              </Link>
-            </li> }
+            {AuthService.isAdmin() && (
+              <li>
+                <Link
+                  className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                    pathname === "/suppliers" ? "active" : ""
+                  }`}
+                  href="/suppliers"
+                >
+                  Suppliers
+                </Link>
+              </li>
+            )}
 
-            { AuthService.isAdmin() && <li>
-              <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/categories' ? 'active' : '' }` }
-                href="/categories"
-              >
-                Categories
-              </Link>
-            </li> }
+            {AuthService.isAdmin() && (
+              <li>
+                <Link
+                  className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                    pathname === "/categories" ? "active" : ""
+                  }`}
+                  href="/categories"
+                >
+                  Categories
+                </Link>
+              </li>
+            )}
             <li>
               <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/products' ? 'active' : '' }` }
+                className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                  pathname === "/products" ? "active" : ""
+                }`}
                 href="/products"
               >
                 Products
@@ -57,7 +67,19 @@ const Header = () =>
             </li>
             <li>
               <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/stores' ? 'active' : '' }` }
+                className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                  pathname === "/sales" ? "active" : ""
+                }`}
+                href="/sales"
+              >
+                Sales
+              </Link>
+            </li>
+            <li>
+              <Link
+                className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                  pathname === "/stores" ? "active" : ""
+                }`}
                 href="/stocks"
               >
                 Stocks
@@ -65,31 +87,41 @@ const Header = () =>
             </li>
             <li>
               <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/purchase-orders' ? 'active' : '' }` }
+                className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                  pathname === "/purchase-orders" ? "active" : ""
+                }`}
                 href="/orders"
               >
                 Purchase Orders
               </Link>
             </li>
-            { AuthService.isAdmin() && <li>
-              <Link
-                className={ `text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${ pathname === '/users' ? 'active' : '' }` }
-                href="/users"
-              >
-                Users
-              </Link>
-            </li> }
-          </> }
+            {AuthService.isAdmin() && (
+              <li>
+                <Link
+                  className={`text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75 ${
+                    pathname === "/users" ? "active" : ""
+                  }`}
+                  href="/users"
+                >
+                  Users
+                </Link>
+              </li>
+            )}
+          </>
+        )}
       </>
     );
   };
 
   return (
     <header className="bg-white dark:bg-gray-900">
-      <div
-        className="max-w-screen-xl mx-auto flex h-16 items-center gap-8 px-4 sm:px-6 lg:px-8"
-      >
-        <Link className={ `block text-blue-600 dark:text-blue-600 ${ pathname === '/' ? 'active' : '' }` } href="/">
+      <div className="max-w-screen-xl mx-auto flex h-16 items-center gap-8 px-4 sm:px-6 lg:px-8">
+        <Link
+          className={`block text-blue-600 dark:text-blue-600 ${
+            pathname === "/" ? "active" : ""
+          }`}
+          href="/"
+        >
           <span className="sr-only">Home</span>
           <svg
             className="h-8"
@@ -106,49 +138,58 @@ const Header = () =>
 
         <div className="flex flex-1 items-center justify-end md:justify-between">
           <nav aria-label="Global" className="hidden md:block">
-            <ul className="flex items-center gap-6 text-sm">
-              { nav() }
-            </ul>
+            <ul className="flex items-center gap-6 text-sm">{nav()}</ul>
           </nav>
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
-              { !user && <>
-                <Link
-                  className={ `block rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 dark:hover:bg-blue-500 ${ pathname === '/login' ? 'active' : '' }` }
-                  href="/login"
-                >
-                  Login
-                </Link>
+              {!user && (
+                <>
+                  <Link
+                    className={`block rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 dark:hover:bg-blue-500 ${
+                      pathname === "/login" ? "active" : ""
+                    }`}
+                    href="/login"
+                  >
+                    Login
+                  </Link>
 
-                <Link
-                  className={ `hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-600 transition hover:text-blue-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75 sm:block ${ pathname === '/signup' ? 'active' : '' }` }
-                  href="/signup"
-                >
-                  Sign Up
-                </Link>
-              </> }
-              { user && <>
-                <div className="dropdown dropdown-hover dropdown-end">
-                  <label tabIndex={ 0 } className="m-1">
-                    <div className="avatar online placeholder">
-                      <p>isim soyisim</p>
-                      <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                        <span className="text-xl uppercase">zart</span>
+                  <Link
+                    className={`hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-600 transition hover:text-blue-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75 sm:block ${
+                      pathname === "/signup" ? "active" : ""
+                    }`}
+                    href="/signup"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+              {user && (
+                <>
+                  <div className="dropdown dropdown-hover dropdown-end">
+                    <label tabIndex={0} className="m-1">
+                      <div className="avatar online placeholder">
+                        <p>isim soyisim</p>
+                        <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+                          <span className="text-xl uppercase">zart</span>
+                        </div>
                       </div>
-                    </div>
-                  </label>
-                  <ul tabIndex={ 0 } className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li onClick={ handleLogout } className="btn btn-ghost">Logout</li>
-                  </ul>
-                </div>
-              </> }
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                      <li onClick={handleLogout} className="btn btn-ghost">
+                        Logout
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="dropdown dropdown-hover dropdown-end md:hidden">
-              <label tabIndex={ 0 } className="m-1">
-                <button
-                  className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
-                >
+              <label tabIndex={0} className="m-1">
+                <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75">
                   <span className="sr-only">Toggle menu</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -166,15 +207,18 @@ const Header = () =>
                   </svg>
                 </button>
               </label>
-              <ul tabIndex={ 0 } className="dropdown-content z-[1] menu p-2 shadow rounded-box w-40 text-gray-500 bg-blue-600">
-                { nav() }
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow rounded-box w-40 text-gray-500 bg-blue-600"
+              >
+                {nav()}
               </ul>
             </div>
           </div>
         </div>
       </div>
-    </header >
+    </header>
   );
 };
 
-export default Header;;
+export default Header;
